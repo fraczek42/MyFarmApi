@@ -25,15 +25,15 @@ namespace MyFarmApi.Controllers
 
                 if (orders == null || !orders.Any())
                 {
-                    return NotFound("No orders found.");
+                    return NotFound("Nie znaleziono zmaówień.");
                 }
 
                 return Ok(orders);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error while fetching orders.");
-                return StatusCode((int)HttpStatusCode.InternalServerError, "An error occurred while processing your request.");
+                _logger.LogError(ex, "Błąd podczas pobierania zamówień.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Błąd podczas pobierania zamówień.");
             }
         }
 
@@ -47,15 +47,15 @@ namespace MyFarmApi.Controllers
 
                 if (order == null)
                 {
-                    return NotFound($"Order with ID {id} not found.");
+                    return NotFound($"Nie znaleziono zamówienia o ID - {id}.");
                 }
 
                 return Ok(order);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error while fetching order with ID {id}.");
-                return StatusCode((int)HttpStatusCode.InternalServerError, "An error occurred while processing your request.");
+                _logger.LogError(ex, $"Błąd podczas pobierania zamówienia o ID - {id}.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Błąd podczas pobierania zamówienia.");
             }
         }
 
@@ -72,22 +72,17 @@ namespace MyFarmApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error while creating a new order.");
-                return StatusCode((int)HttpStatusCode.InternalServerError, "An error occurred while processing your request.");
+                _logger.LogError(ex, "Błąd podczas tworzenia zamówienia.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Błąd podczas tworzenia zamówienia.");
             }
         }
 
         // PUT /api/orders/{id}
         [HttpPut("{id}")]
-        public IActionResult UpdateOrder(int id, [FromBody] Order order)
+        public IActionResult UpdateOrder([FromBody] Order order)
         {
             try
             {
-                if (id != order.Id)
-                {
-                    return BadRequest("Order ID mismatch.");
-                }
-
                 // Logika aktualizacji zamówienia
                 // ...
 
@@ -95,8 +90,8 @@ namespace MyFarmApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error while updating order with ID {id}.");
-                return StatusCode((int)HttpStatusCode.InternalServerError, "An error occurred while processing your request.");
+                _logger.LogError(ex, $"Błąd podczas aktualizacji zamówienia ID - {order.Id}.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, $"Błąd podczas aktualizacji zamówienia ID - {order.Id}.");
             }
         }
 
@@ -113,8 +108,8 @@ namespace MyFarmApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error while deleting order with ID {id}.");
-                return StatusCode((int)HttpStatusCode.InternalServerError, "An error occurred while processing your request.");
+                _logger.LogError(ex, $"Błąd podczas usuwania zamówienia ID - {id}.");
+                return StatusCode((int)HttpStatusCode.InternalServerError, $"Błąd podczas usuwania zamówienia ID - {id}.");
             }
         }
 
